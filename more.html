@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More about me | Hayoung Lee</title>
+<meta name="description" content="More about Hayoung Lee, including how to get in touch.">
+<!-- 링크 미리보기 카드. 그림을 바꾸면 ?v=1 숫자도 올려 주세요 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hayoung Lee">
+<meta property="og:title" content="More about me | Hayoung Lee">
+<meta property="og:description" content="More about Hayoung Lee, including how to get in touch.">
+<meta property="og:url" content="https://siwawa.github.io/more.html">
+<meta property="og:image" content="https://siwawa.github.io/assets/og-image.png?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hayoung Lee, undergraduate researcher at Seoul National University">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="brand" href="index.html">Hayoung Lee</a>
+    <nav><ul><li><a href="index.html">About me</a></li><li><a href="research.html">Research Interests</a></li><li><a href="prior.html">Prior Research</a></li><li><span class="here">More about me</span></li><li><a href="cv.pdf">CV</a></li></ul></nav>
+  </div>
+</header>
+<main>
+<p>Email is the best way to reach me, and I check it most often. Feel free to get in touch at siwawa [at] snu [dot] ac [dot] kr.</p>
+<p>Anything outside research you want people to know.</p>
+<ul>
+  <li>Something you started or help run</li>
+  <li>Something you teach or organize</li>
+  <li>Something you do for fun</li>
+</ul>
+<!-- 사진은 도마뱀을 눌러야 나와요. 사진 파일은 assets/private 아래 hobby, cooking 폴더에 넣으세요 -->
+<div class="lock">
+  <button class="lizard" type="button" aria-label="Show photos"><img src="assets/lizard.svg" alt="" width="56" height="56"></button>
+  <p class="lock-hint">Tap the lizard to see photos.</p>
+</div>
+<div class="photos" hidden>
+<h3>Another thing you love</h3>
+<p>A line about it.</p>
+<div class="gallery">
+  <div class="gal-track">
+    <figure><img data-photo="hobby/1.jpg" alt="Describe the photo"><figcaption>Caption</figcaption></figure>
+    <figure><img data-photo="hobby/2.jpg" alt="Describe the photo"><figcaption>Caption</figcaption></figure>
+    <figure><img data-photo="hobby/3.jpg" alt="Describe the photo"><figcaption>Caption</figcaption></figure>
+  </div>
+  <button class="gal-btn prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+  <button class="gal-btn next" type="button" aria-label="Next photo">&rsaquo;</button>
+  <p class="gal-count"></p>
+</div>
+<h3>Cooking</h3>
+<p>A line about what you like to cook.</p>
+<div class="gallery">
+  <div class="gal-track">
+    <figure><img data-photo="cooking/1.jpg" alt="Describe the dish"><figcaption>Name of the dish</figcaption></figure>
+    <figure><img data-photo="cooking/2.jpg" alt="Describe the dish"><figcaption>Name of the dish</figcaption></figure>
+    <figure><img data-photo="cooking/3.jpg" alt="Describe the dish"><figcaption>Name of the dish</figcaption></figure>
+  </div>
+  <button class="gal-btn prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+  <button class="gal-btn next" type="button" aria-label="Next photo">&rsaquo;</button>
+  <p class="gal-count"></p>
+</div>
+</div>
+<canvas class="lizards" aria-hidden="true"></canvas>
+<p class="updated">Last updated Nov 2026</p>
+</main>
+<script src="site.js"></script>
+</body>
+</html>

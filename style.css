@@ -1,0 +1,121 @@
+/* 모든 페이지가 이 파일 하나를 같이 써요. 색은 여기 맨 위에서만 바꾸면 돼요 */
+:root {
+  /* 실험 노트: 파란 볼펜 잉크, 빨간 여백선 */
+  --bg: #ffffff;
+  --bar: #eef2fb;
+  --fg: #1b2340;
+  --muted: #5a6280;
+  --accent: #d64541;
+  --link: #2f55d4;
+  --line: #d9dfef;
+  --margin: #e8a3a0;
+  --barline: #b9c7ea;
+  --ph: #e8ecf6;
+  --grain: none;
+}
+body {
+  margin: 0;
+  background-color: var(--bg);
+  background-image: var(--grain);
+  color: var(--fg);
+  font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+a { color: var(--link); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 상단바 */
+.topbar { background-color: var(--bar); background-image: var(--grain); border-bottom: 1px solid var(--barline); }
+.topbar .in {
+  max-width: 760px; margin: 0 auto; padding: 14px 20px; box-sizing: border-box;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap;
+}
+.brand { font-size: 20px; font-weight: bold; color: var(--fg); text-decoration: none; }
+.topbar nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.topbar nav a, .topbar nav .here { display: inline-block; padding: 3px 0; border-bottom: 2px solid transparent; color: var(--fg); text-decoration: none; }
+.topbar nav a:hover { color: var(--link); }
+.topbar nav .here { color: var(--fg); font-weight: bold; border-bottom-color: var(--accent); }
+
+/* 본문 */
+main { max-width: 760px; margin: 0 auto; box-sizing: border-box; padding: 36px 20px 48px 24px; border-left: 2px solid var(--margin); }
+h2 { display: inline-block; margin: 0 0 18px; padding-bottom: 4px; font-size: 24px; border-bottom: 2px solid var(--accent); }
+h3 { margin: 28px 0 6px; font-size: 18px; }
+p { margin: 0 0 12px; }
+ul { margin: 0 0 14px; padding-left: 22px; }
+li { margin-bottom: 4px; }
+
+/* About me 맨 위 사진. 글이 사진 옆으로 흘러요 */
+.portrait { float: right; width: 160px; height: 200px; margin: 4px 0 16px 24px; background: var(--ph); visibility: hidden; }
+.portrait.loaded { visibility: visible; }
+.portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.contact { margin-top: 18px; }
+main h3 { clear: both; }
+
+.news { list-style: none; padding: 0; }
+.news li { display: grid; grid-template-columns: 84px 1fr; gap: 12px; margin-bottom: 8px; }
+.news .date { color: var(--muted); }
+
+.entry { display: flex; gap: 18px; margin: 0 0 26px; }
+.thumb { flex: none; width: 140px; height: 100px; background: var(--ph); }
+.thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.entry h3 { margin-top: 0; }
+.meta { margin: 0 0 6px; color: var(--muted); font-size: 15px; }
+.pubs li { margin-bottom: 10px; }
+/* 맨 아래 도마뱀 띠 */
+.lizards { display: block; width: 100%; height: 110px; margin-top: 44px; border-top: 1px solid var(--line); }
+.updated { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+/* 사진 갤러리: 휴대폰은 밀어서, 컴퓨터는 버튼으로 넘겨요 */
+.gallery { position: relative; max-width: 520px; margin: 10px 0 4px; }
+.gal-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.gal-track::-webkit-scrollbar { display: none; }
+.gal-track figure { flex: 0 0 100%; margin: 0; scroll-snap-align: start; }
+.gal-track img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--ph); border-radius: 3px; }
+.gal-track figcaption { margin-top: 6px; font-size: 15px; color: var(--muted); }
+.gal-btn {
+  position: absolute; top: calc(50% - 36px); width: 38px; height: 38px;
+  border: 1px solid var(--line); border-radius: 50%; background: var(--bg); color: var(--fg);
+  font: inherit; font-size: 26px; line-height: 1; padding: 0 0 3px; cursor: pointer; opacity: 0.92;
+}
+.gal-btn.prev { left: 8px; }
+.gal-btn.next { right: 8px; }
+.gal-btn:disabled { opacity: 0.3; cursor: default; }
+.gal-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.gal-count { margin: 4px 0 0; font-size: 14px; color: var(--muted); text-align: right; }
+
+/* 도마뱀을 눌러야 사진이 나와요 */
+.lock { display: flex; align-items: center; gap: 14px; margin: 26px 0 8px; }
+.lizard { flex: none; width: 72px; height: 72px; padding: 7px; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); cursor: pointer; }
+.lizard img { display: block; width: 100%; height: 100%; }
+.lizard:hover { border-color: var(--accent); }
+.lizard:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lock-hint { margin: 0; color: var(--muted); }
+.photos[hidden] { display: none; }
+
+/* 연구 질문 토글: 누르면 펼쳐져요 */
+.qs { margin: 4px 0 8px; border-bottom: 1px solid var(--line); }
+details.q { border-top: 1px solid var(--line); }
+details.q summary { position: relative; padding: 9px 0 9px 24px; cursor: pointer; list-style: none; }
+details.q summary::-webkit-details-marker { display: none; }
+details.q summary::before { content: "+"; position: absolute; left: 2px; top: 8px; color: var(--accent); font-weight: bold; }
+details.q[open] summary::before { content: "\2212"; }
+details.q summary:hover { color: var(--link); }
+details.q summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+details.q p { margin: 0 0 14px 24px; }
+
+/* 잠긴 내용 자리와 연구 질문 그림 */
+.gate-note { color: var(--muted); }
+.gate-box { margin-top: 8px; }
+details.q figure { margin: 4px 0 12px 24px; }
+details.q figure img { display: block; width: 100%; max-width: 520px; height: auto; border: 1px solid var(--line); border-radius: 4px; background: #fbf9f4; }
+
+/* 휴대폰 */
+@media (max-width: 640px) {
+  .topbar .in { flex-direction: column; align-items: flex-start; }
+  .topbar nav ul { gap: 2px 16px; }
+  main { padding: 28px 18px 40px 18px; margin-left: 10px; }
+  .portrait { width: 112px; height: 140px; margin-left: 16px; }
+  .entry { flex-direction: column; gap: 10px; }
+  .thumb { width: 100%; height: 160px; }
+}
