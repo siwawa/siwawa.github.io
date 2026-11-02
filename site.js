@@ -18,10 +18,12 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
       var c = JSON.parse(sessionStorage.getItem('gate') || 'null');
       if (c && c.exp > Date.now() + 60000) return Promise.resolve(c.session);
     } catch (e) {}
+    if (/YOUR-/.test(GATE.worker + GATE.sitekey)) return Promise.reject(new Error('not configured'));
     if (pending) return pending;
     pending = loadTurnstile().then(function () {
       return new Promise(function (res, rej) {
         var holder = document.createElement('div');
+        if (!box) holder.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:50;';
         (box || document.body).appendChild(holder);
         window.turnstile.render(holder, {
           sitekey: GATE.sitekey,
@@ -29,9 +31,9 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
             fetch(GATE.worker + '/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: token }) })
               .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('denied')); })
               .then(function (d) { try { sessionStorage.setItem('gate', JSON.stringify(d)); } catch (e) {} holder.remove(); res(d.session); })
-              .catch(rej);
+              .catch(function (e) { holder.remove(); rej(e); });
           },
-          'error-callback': function () { rej(new Error('turnstile')); }
+          'error-callback': function () { holder.remove(); rej(new Error('turnstile')); }
         });
       });
     });
@@ -89,16 +91,20 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
   var box = document.querySelector('.photos');
   if (!btn || !box) return;
   btn.addEventListener('click', function () {
+    if (btn.disabled) return;
+    btn.disabled = true;
     var hint = document.querySelector('.lock-hint');
     if (hint) hint.textContent = 'One moment…';
-    window.gateSession(btn.parentNode).then(function (s) {
+    window.gateSession(document.getElementById('lock-gate') || document.body).then(function (s) {
       box.querySelectorAll('img[data-photo]').forEach(function (img) {
         if (!img.getAttribute('src')) img.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
       });
       box.hidden = false;
       if (hint) hint.textContent = 'Here you go.';
       document.querySelectorAll('.gallery').forEach(function (g) { if (g.update) g.update(); });
-    }).catch(function () { if (hint) hint.textContent = 'Couldn’t load the photos. Please try again.'; });
+    }).catch(function () {
+      if (hint) hint.textContent = 'Couldn’t load the photos. Please try again.';
+    }).then(function () { btn.disabled = false; });
   });
 })();
 
@@ -128,7 +134,7 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
   window.__lizards = [];
   document.querySelectorAll('canvas.lizards').forEach(function (cv) {
     var ctx = cv.getContext('2d'), W = 0, H = 0, R = [], L = null, B = [], Z = [];
-    var px = -999, py = -999, prev = performance.now(), night = nightNow, bugT = 1.5;
+    var px = -999, py = -999, prev = performance.now(), night = nightNow, bugT = 1.5, K = 1;
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
     function makeRocks() {
       R = [{ x: W - 72, y: H - 34, rx: 38, ry: 22 }, { x: W - 132, y: H - 22, rx: 26, ry: 15 }, { x: W - 36, y: H - 80, rx: 22, ry: 14 }];
@@ -160,9 +166,10 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
     function fit() {
       var w = cv.clientWidth, h = cv.clientHeight;
       if (!w || !h) return false;
-      if (w !== W || h !== H) {
+      var k = (parseFloat(getComputedStyle(document.documentElement).fontSize) || 17) / 17;
+      if (w / k !== W || h / k !== H) {
         var d = window.devicePixelRatio || 1;
-        W = w; H = h; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+        K = k; W = w / k; H = h / k; cv.width = w * d; cv.height = h * d; ctx.setTransform(d * k, 0, 0, d * k, 0, 0);
         makeRocks();
         if (!L) {
           L = cols.map(function (c) { return { x: 20 + Math.random() * (W * 0.6), y: 15 + Math.random() * (H - 30), a: Math.random() * 6.28, v: 0, t: Math.random() * 2, st: 'rest', ph: 0, c: c, tg: null, curl: 0, zt: Math.random() * 3, chew: 0, prey: null }; });
@@ -171,7 +178,7 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
       }
       return true;
     }
-    function pos(e) { var b = cv.getBoundingClientRect(); px = e.clientX - b.left; py = e.clientY - b.top; }
+    function pos(e) { var b = cv.getBoundingClientRect(); px = (e.clientX - b.left) / K; py = (e.clientY - b.top) / K; }
     cv.addEventListener('pointermove', pos);
     cv.addEventListener('pointerdown', pos);
     cv.addEventListener('pointerleave', function () { px = py = -999; });
