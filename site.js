@@ -132,6 +132,20 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   });
 })();
 
+// 바뀌는 단어: data-words에 | 로 나눈 단어를 3초마다 하나씩 보여 줘요
+// 움직임 줄이기를 켠 방문자에게는 첫 단어만 보여요
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.rotate[data-words]').forEach(function (el) {
+    var words = el.getAttribute('data-words').split('|'), i = 0;
+    if (words.length < 2) return;
+    setInterval(function () {
+      el.classList.add('out');
+      setTimeout(function () { i = (i + 1) % words.length; el.textContent = words[i]; el.classList.remove('out'); }, 800);
+    }, 3000);
+  });
+})();
+
 // 다크 모드 버튼: 상단 메뉴 끝에 붙어요. 누른 값은 이 브라우저에 기억해요
 (function () {
   var root = document.documentElement, ul = document.querySelector('.topbar nav ul');

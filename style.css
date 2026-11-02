@@ -68,6 +68,10 @@ p { margin: 0 0 0.706rem; }
 ul { margin: 0 0 0.824rem; padding-left: 1.294rem; }
 li { margin-bottom: 0.235rem; }
 
+/* 몇 초마다 천천히 사라졌다 나타나며 바뀌는 단어 (site.js) */
+.rotate { transition: opacity 0.8s; }
+.rotate.out { opacity: 0; }
+
 /* About me 맨 위 사진. 글이 사진 옆으로 흘러요 */
 .portrait { float: right; width: 9.412rem; height: 11.765rem; margin: 0.235rem 0 0.941rem 1.412rem; background: var(--ph); visibility: hidden; }
 .portrait.loaded { visibility: visible; }
