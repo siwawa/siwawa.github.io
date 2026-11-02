@@ -1,5 +1,5 @@
 // 잠금 설정: Cloudflare 설정을 마친 뒤 이 두 값만 채우세요
-var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY' };
+var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x4AAAAAAFwVHGAGYA-JvVyL' };
 
 // 문지기와 통신하는 부분: Turnstile로 확인하고 30분짜리 통행증을 받아요
 (function () {
