@@ -85,43 +85,41 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
   });
 })();
 
-// 도마뱀을 누르면 확인을 거쳐 사진을 불러와요
+// 도마뱀을 누르면 확인을 거쳐 숨긴 내용을 불러와요
+// More about me에서는 사진, Research Interests에서는 연구 질문 본문과 그림이에요
+// 누르기 전, 다 나온 뒤, 실패했을 때 문구는 HTML의 .lock-hint와 data-done, data-fail에 있어요
 (function () {
-  var btn = document.querySelector('.lizard');
-  var box = document.querySelector('.photos');
-  if (!btn || !box) return;
-  btn.addEventListener('click', function () {
-    if (btn.disabled) return;
-    btn.disabled = true;
-    var hint = document.querySelector('.lock-hint');
-    if (hint) hint.textContent = 'One moment…';
-    window.gateSession(document.getElementById('lock-gate') || document.body).then(function (s) {
-      box.querySelectorAll('img[data-photo]').forEach(function (img) {
-        if (!img.getAttribute('src')) img.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
-      });
-      box.hidden = false;
-      if (hint) hint.textContent = 'Here you go.';
-      document.querySelectorAll('.gallery').forEach(function (g) { if (g.update) g.update(); });
-    }).catch(function () {
-      if (hint) hint.textContent = 'Couldn’t load the photos. Please try again.';
-    }).then(function () { btn.disabled = false; });
-  });
-})();
-
-// Research Interests 본문과 그림: 페이지가 열리면 확인을 거쳐 불러와요
-(function () {
-  var el = document.getElementById('research-body');
-  if (!el) return;
-  var note = el.querySelector('.gate-note'), box = el.querySelector('.gate-box');
-  window.gateSession(box).then(function (s) {
-    return fetch(window.gateURL(el.getAttribute('data-gate'), s))
+  var btn = document.querySelector('.lizard'), hint = document.querySelector('.lock-hint');
+  if (!btn || !hint) return;
+  var photos = document.querySelector('.photos'), research = document.getElementById('research-body');
+  var done = false;
+  function showPhotos(s) {
+    photos.querySelectorAll('img[data-photo]').forEach(function (img) {
+      if (!img.getAttribute('src')) img.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
+    });
+    photos.hidden = false;
+    document.querySelectorAll('.gallery').forEach(function (g) { if (g.update) g.update(); });
+  }
+  function showResearch(s) {
+    return fetch(window.gateURL(research.getAttribute('data-gate'), s))
       .then(function (r) { if (!r.ok) throw new Error('load'); return r.text(); })
       .then(function (html) {
-        el.innerHTML = html;
-        el.querySelectorAll('img[data-gate]').forEach(function (img) { img.src = window.gateURL(img.getAttribute('data-gate'), s); });
+        research.innerHTML = html;
+        research.querySelectorAll('img[data-gate]').forEach(function (img) { img.src = window.gateURL(img.getAttribute('data-gate'), s); });
       });
-  }).catch(function () {
-    if (note) note.textContent = 'Couldn’t load my research questions. Please refresh, or email me at siwawa [at] snu [dot] ac [dot] kr.';
+  }
+  btn.addEventListener('click', function () {
+    if (btn.disabled || done) return;
+    btn.disabled = true;
+    hint.textContent = 'One moment…';
+    window.gateSession(document.getElementById('lock-gate') || document.body).then(function (s) {
+      return research ? showResearch(s) : showPhotos(s);
+    }).then(function () {
+      done = true;
+      hint.textContent = hint.getAttribute('data-done');
+    }).catch(function () {
+      hint.textContent = hint.getAttribute('data-fail');
+    }).then(function () { btn.disabled = false; });
   });
 })();
 
