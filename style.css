@@ -12,6 +12,21 @@
   --barline: #b9c7ea;
   --ph: #e8ecf6;
   --grain: none;
+  color-scheme: light;
+}
+/* 다크 모드: 밤의 실험 노트. 남색 종이에 밝은 잉크. 상단 버튼으로 바꿔요 */
+:root[data-theme="dark"] {
+  --bg: #141a2e;
+  --bar: #1b2340;
+  --fg: #e3e8f6;
+  --muted: #9aa3c0;
+  --accent: #e8635e;
+  --link: #8fa8f5;
+  --line: #2c3558;
+  --margin: #7a3a3c;
+  --barline: #33406b;
+  --ph: #222a45;
+  color-scheme: dark;
 }
 /* 글씨 크기는 어느 화면에서나 같아요. 노트북과 모니터 크기 차이는 Windows 배율이 맞춰 줘요.
    모든 크기는 rem 단위라 이 숫자만 바꾸면 글씨와 여백이 함께 바뀌어요 */
@@ -35,10 +50,15 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   display: flex; align-items: center; justify-content: space-between; gap: 0.471rem 1.412rem; flex-wrap: wrap;
 }
 .brand { font-size: 1.176rem; font-weight: bold; color: var(--fg); text-decoration: none; }
-.topbar nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.235rem 1.176rem; }
+.topbar nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.235rem 1.176rem; }
 .topbar nav a, .topbar nav .here { display: inline-block; padding: 0.176rem 0; border-bottom: 2px solid transparent; color: var(--fg); text-decoration: none; }
 .topbar nav a:hover { color: var(--link); }
 .topbar nav .here { color: var(--fg); font-weight: bold; border-bottom-color: var(--accent); }
+/* 메뉴 끝의 다크 모드 버튼 (site.js가 붙여요) */
+.theme-btn { display: block; padding: 0.235rem; border: 1px solid var(--barline); border-radius: 50%; background: var(--bg); color: var(--fg); cursor: pointer; }
+.theme-btn svg { display: block; width: 1rem; height: 1rem; }
+.theme-btn:hover { color: var(--link); border-color: var(--link); }
+.theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* 본문 */
 main { max-width: 46rem; margin: 0 auto; box-sizing: border-box; padding: 2.118rem 1.176rem 2.824rem 1.412rem; border-left: 2px solid var(--margin); }
@@ -91,6 +111,7 @@ main h3 { clear: both; }
 .lock { display: flex; align-items: center; gap: 0.824rem; margin: 1.529rem 0 0.471rem; }
 .lizard { flex: none; width: 4.235rem; height: 4.235rem; padding: 0.412rem; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); cursor: pointer; }
 .lizard img { display: block; width: 100%; height: 100%; }
+[data-theme="dark"] .lizard img { filter: invert(1) hue-rotate(180deg); }
 .lizard:hover { border-color: var(--accent); }
 .lizard:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .lock-hint { margin: 0; color: var(--muted); }
