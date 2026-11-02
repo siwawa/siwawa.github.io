@@ -13,9 +13,9 @@
   --ph: #e8ecf6;
   --grain: none;
 }
-/* 화면이 넓을수록 글씨와 여백이 함께 커져요. 노트북 이하에선 17px, 4K 모니터에선 30px 남짓.
-   더 키우려면 0.6vw를, 최소 크기를 바꾸려면 17px을 바꾸세요 */
-html { font-size: clamp(17px, calc(9px + 0.6vw), 34px); }
+/* 글씨 크기는 어느 화면에서나 같아요. 노트북과 모니터 크기 차이는 Windows 배율이 맞춰 줘요.
+   모든 크기는 rem 단위라 이 숫자만 바꾸면 글씨와 여백이 함께 바뀌어요 */
+html { font-size: 17px; }
 body {
   margin: 0;
   background-color: var(--bg);
