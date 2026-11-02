@@ -180,6 +180,8 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
 (function () {
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var cols = ['#7d9a6a', '#b98a55', '#7f97b5', '#c4a24f', '#a4796f'];
+  // 힘 = 색의 밝기(가장 밝은 채널). 노랑 > 주황 > 파랑 > 적갈색 > 초록
+  function bright(c) { return Math.max(parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)); }
   var hr = new Date().getHours();
   var nightNow = hr >= 20 || hr < 6;
   window.__lizards = [];
@@ -188,7 +190,8 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     var px = -999, py = -999, prev = performance.now(), night = nightNow, bugT = 1.5, K = 1;
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
     function makeRocks() {
-      R = [{ x: W - 72, y: H - 34, rx: 38, ry: 22 }, { x: W - 132, y: H - 22, rx: 26, ry: 15 }, { x: W - 36, y: H - 80, rx: 22, ry: 14 }];
+      R = [{ x: W - 72, y: H - 34, rx: 38, ry: 22 }, { x: W - 132, y: H - 22, rx: 26, ry: 15 }, { x: W - 36, y: H - 80, rx: 22, ry: 14 },
+        { x: 52, y: H - 30, rx: 30, ry: 17 }, { x: 106, y: H - 18, rx: 19, ry: 11 }];
       R.forEach(function (r, i) {
         var g = seeded(17 + i * 31), n = 11, tilt = (g() - 0.5) * 0.5;
         r.pts = [];
@@ -223,7 +226,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
         K = k; W = w / k; H = h / k; cv.width = w * d; cv.height = h * d; ctx.setTransform(d * k, 0, 0, d * k, 0, 0);
         makeRocks();
         if (!L) {
-          L = cols.map(function (c) { return { x: 20 + Math.random() * (W * 0.6), y: 15 + Math.random() * (H - 30), a: Math.random() * 6.28, v: 0, t: Math.random() * 2, st: 'rest', ph: 0, c: c, tg: null, curl: 0, zt: Math.random() * 3, chew: 0, prey: null }; });
+          L = cols.map(function (c) { return { x: 20 + Math.random() * (W * 0.6), y: 15 + Math.random() * (H - 30), a: Math.random() * 6.28, v: 0, t: Math.random() * 2, st: 'rest', ph: 0, c: c, pw: bright(c), tug: 0, tg: null, curl: 0, zt: Math.random() * 3, chew: 0, prey: null }; });
           setMode(night);
         }
       }
@@ -246,15 +249,30 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
       }
       if (best) B.push({ x: best.x, y: best.y, a: Math.random() * 6.28, life: 11 + Math.random() * 6, f: 0 });
     }
-    function separate() {
-      var minD = 22;
+    // 붙으면 서로 밀어내요. 밝은 색(노랑, 주황)일수록 힘이 세서 덜 밀려나요
+    // 같은 자리를 두고 1초쯤 줄다리기하다가 밝은 도마뱀이 차지하고, 약한 쪽은 다른 돌로 가요
+    var minD = 22;
+    function wants(l, o) { return l.tg && Math.hypot(l.tg.x - o.x, l.tg.y - o.y) < minD; }
+    function giveUp(w, s) {
+      var tg, k = 0;
+      do { tg = night ? edge(pick()) : spot(pick()); } while (++k < 6 && Math.hypot(tg.x - s.x, tg.y - s.y) < 40);
+      w.tg = tg; w.st = 'go'; w.prey = null; w.tug = 0;
+    }
+    function separate(dt) {
       for (var i = 0; i < L.length; i++) for (var j = i + 1; j < L.length; j++) {
         var a = L[i], b = L[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
         if (d < minD) {
           if (d < 0.01) { dx = Math.random() - 0.5; dy = Math.random() - 0.5; d = Math.hypot(dx, dy); }
-          var push = (minD - d) / 2, ux = dx / d, uy = dy / d;
-          var fa = a.st === 'sleep' ? 0.3 : 1, fb = b.st === 'sleep' ? 0.3 : 1;
+          var push = minD - d, ux = dx / d, uy = dy / d, sum = a.pw + b.pw;
+          var fa = (a.st === 'sleep' ? 0.3 : 1) * b.pw / sum, fb = (b.st === 'sleep' ? 0.3 : 1) * a.pw / sum;
+          var s = a.pw >= b.pw ? a : b, w = s === a ? b : a;
+          var takes = wants(s, w), tug = wants(w, s) || (s.tg && w.tg && Math.hypot(s.tg.x - w.tg.x, s.tg.y - w.tg.y) < minD);
+          // 자리 다툼 중에는 약한 쪽만 밀려나요
+          if (takes || tug) { fa = w === a ? 1 : 0; fb = w === b ? 1 : 0; }
           a.x -= ux * push * fa; a.y -= uy * push * fa; b.x += ux * push * fb; b.y += uy * push * fb;
+          // 센 쪽이 오면 약한 쪽이 바로 비켜 주고, 약한 쪽이 덤비면 1초쯤 빙글빙글 버티다 포기해요
+          if (takes) giveUp(w, s);
+          else if (tug) { w.tug += dt * 2; if (w.tug > 1) giveUp(w, s); }
         }
       }
     }
@@ -349,7 +367,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
         }
         ctx.clearRect(0, 0, W, H);
         R.forEach(rock); B.forEach(bug);
-        if (!still) { L.forEach(function (l) { upd(l, dt); }); separate(); }
+        if (!still) { L.forEach(function (l) { upd(l, dt); l.tug = Math.max(0, l.tug - dt); }); separate(dt); }
         L.forEach(draw);
         ctx.font = '11px sans-serif';
         Z = Z.filter(function (z) { return (z.life -= dt) > 0; });
