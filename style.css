@@ -112,7 +112,7 @@ main h3 { clear: both; }
 .gal-count { margin: 0.235rem 0 0; font-size: 0.824rem; color: var(--muted); text-align: right; }
 
 /* 도마뱀을 눌러야 사진이 나와요 */
-.lock { display: flex; align-items: center; gap: 0.824rem; margin: 1.529rem 0 0.471rem; }
+.lock { display: flex; align-items: center; gap: 0.824rem; margin: 2.588rem 0 0.471rem; }
 .lizard { flex: none; width: 4.235rem; height: 4.235rem; padding: 0.412rem; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); cursor: pointer; }
 .lizard img { display: block; width: 100%; height: 100%; }
 [data-theme="dark"] .lizard img { filter: invert(1) hue-rotate(180deg); }
