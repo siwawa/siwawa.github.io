@@ -22,18 +22,27 @@ var GATE = { worker: 'https://YOUR-WORKER.workers.dev', sitekey: 'YOUR-SITE-KEY'
     if (pending) return pending;
     pending = loadTurnstile().then(function () {
       return new Promise(function (res, rej) {
-        var holder = document.createElement('div');
+        // 대부분은 보이지 않게 통과하고, Cloudflare가 애매하다고 보는 사람에게만 체크 상자가 나와요
+        var holder = document.createElement('div'), note = document.createElement('p'), widget = document.createElement('div');
+        note.className = 'gate-note'; note.hidden = true;
+        note.textContent = 'Just a quick check that you are a person. Please tick the box below.';
+        holder.appendChild(note); holder.appendChild(widget);
         if (!box) holder.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:50;';
         (box || document.body).appendChild(holder);
-        window.turnstile.render(holder, {
+        function fail(e) { holder.remove(); rej(e); }
+        window.turnstile.render(widget, {
           sitekey: GATE.sitekey,
+          appearance: 'interaction-only',
+          theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light',
+          'before-interactive-callback': function () { note.hidden = false; },
           callback: function (token) {
             fetch(GATE.worker + '/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: token }) })
               .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('denied')); })
               .then(function (d) { try { sessionStorage.setItem('gate', JSON.stringify(d)); } catch (e) {} holder.remove(); res(d.session); })
-              .catch(function (e) { holder.remove(); rej(e); });
+              .catch(fail);
           },
-          'error-callback': function () { holder.remove(); rej(new Error('turnstile')); }
+          'error-callback': function () { fail(new Error('turnstile')); },
+          'timeout-callback': function () { fail(new Error('timeout')); }
         });
       });
     });
