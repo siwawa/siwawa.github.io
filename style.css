@@ -71,6 +71,8 @@ li { margin-bottom: 0.235rem; }
 /* 몇 초마다 천천히 사라졌다 나타나며 바뀌는 단어 (site.js) */
 .rotate { transition: opacity 0.8s; }
 .rotate.out { opacity: 0; }
+/* Research Interests의 바뀌는 질문 한 줄. 연구 질문 토글과 같은 만큼 들여 써요 */
+.ask { margin: 0.235rem 0 0.941rem 1.412rem; }
 
 /* About me 맨 위 가로로 긴 사진(3:1). 불러오기 전에도 자리를 잡아 둬서 글이 밀리지 않아요 */
 .portrait { width: 100%; aspect-ratio: 3 / 1; margin: 0 0 1.412rem; background: var(--ph); visibility: hidden; border-radius: 0.176rem; overflow: hidden; }

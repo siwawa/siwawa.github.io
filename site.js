@@ -140,6 +140,17 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   document.querySelectorAll('.rotate[data-words]').forEach(function (el) {
     var words = el.getAttribute('data-words').split('|'), i = 0;
     if (words.length < 2) return;
+    // 가장 긴 문구 높이만큼 자리를 잡아 둬서, 바뀔 때 아래 글이 들썩이지 않아요
+    var box = el.closest('p') || el.parentNode;
+    function fit() {
+      var cur = el.textContent, h = 0;
+      box.style.minHeight = '';
+      words.forEach(function (w) { el.textContent = w; h = Math.max(h, box.offsetHeight); });
+      el.textContent = cur;
+      box.style.minHeight = h + 'px';
+    }
+    fit();
+    window.addEventListener('resize', fit);
     setInterval(function () {
       el.classList.add('out');
       setTimeout(function () { i = (i + 1) % words.length; el.textContent = words[i]; el.classList.remove('out'); }, 800);
