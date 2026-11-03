@@ -72,8 +72,8 @@ li { margin-bottom: 0.235rem; }
 .rotate { transition: opacity 0.8s; }
 .rotate.out { opacity: 0; }
 
-/* About me 맨 위 사진. 글이 사진 옆으로 흘러요 */
-.portrait { float: right; width: 9.412rem; height: 11.765rem; margin: 0.235rem 0 0.941rem 1.412rem; background: var(--ph); visibility: hidden; }
+/* About me 맨 위 가로로 긴 사진(3:1). 불러오기 전에도 자리를 잡아 둬서 글이 밀리지 않아요 */
+.portrait { width: 100%; aspect-ratio: 3 / 1; margin: 0 0 1.412rem; background: var(--ph); visibility: hidden; border-radius: 0.176rem; overflow: hidden; }
 .portrait.loaded { visibility: visible; }
 .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .contact { margin-top: 1.059rem; }
@@ -94,7 +94,7 @@ main h3 { clear: both; }
 .updated { margin-top: 0.588rem; font-size: 0.765rem; color: var(--muted); }
 
 /* 사진 갤러리: 휴대폰은 밀어서, 컴퓨터는 버튼으로 넘겨요 */
-.gallery { position: relative; max-width: 30.588rem; margin: 0.588rem 0 0.235rem; }
+.gallery { position: relative; max-width: 30.588rem; margin: 0.588rem auto 0.235rem; }
 .gal-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .gal-track::-webkit-scrollbar { display: none; }
 .gal-track figure { flex: 0 0 100%; margin: 0; scroll-snap-align: start; }
@@ -144,7 +144,6 @@ details.q figure img { display: block; width: 100%; max-width: 30.588rem; height
   .topbar .in { flex-direction: column; align-items: flex-start; }
   .topbar nav ul { gap: 2px 0.941rem; }
   main { padding: 1.647rem 1.059rem 2.353rem 1.059rem; margin-left: 0.588rem; }
-  .portrait { width: 6.588rem; height: 8.235rem; margin-left: 0.941rem; }
   .entry { flex-direction: column; gap: 0.588rem; }
   .thumb { width: 100%; height: 9.412rem; }
 }
