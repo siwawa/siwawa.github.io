@@ -122,6 +122,8 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   var events = ['pointermove', 'scroll', 'touchstart', 'keydown'], started = false;
   function showPhotos(s) {
     photos.querySelectorAll('img[data-photo]').forEach(function (img) {
+      // R2에 아직 없는 사진은 "Photo coming soon"으로 보여요
+      img.addEventListener('error', function () { img.parentNode.classList.add('missing'); });
       if (!img.getAttribute('src')) img.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
     });
     photos.hidden = false;
@@ -141,7 +143,10 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     window.gateSession(gate || document.body).then(function (s) {
       return research ? showResearch(s) : showPhotos(s);
     }).catch(function () {
-      if (!research) return;
+      if (!research) {
+        photos.querySelectorAll('figure').forEach(function (f) { f.classList.add('failed'); });
+        return;
+      }
       var p = document.createElement('p');
       p.className = 'gate-note';
       p.textContent = research.getAttribute('data-fail');

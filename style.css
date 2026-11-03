@@ -52,7 +52,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   display: flex; align-items: center; justify-content: space-between; gap: 0.471rem 1.412rem; flex-wrap: wrap;
 }
 .brand { font-size: 1.176rem; font-weight: bold; color: var(--fg); text-decoration: none; }
-.topbar nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.235rem 1.176rem; }
+.topbar nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.235rem 0.941rem; }
 .topbar nav a, .topbar nav .here { display: inline-block; padding: 0.176rem 0; border-bottom: 2px solid transparent; color: var(--fg); text-decoration: none; }
 .topbar nav a:hover { color: var(--link); }
 .topbar nav .here { color: var(--fg); font-weight: bold; border-bottom-color: var(--accent); }
@@ -108,8 +108,14 @@ p, li { text-wrap: pretty; }
 .gallery { position: relative; max-width: 30.588rem; margin: 0.588rem auto 0.235rem; }
 .gal-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .gal-track::-webkit-scrollbar { display: none; }
-.gal-track figure { flex: 0 0 100%; margin: 0; scroll-snap-align: start; }
-.gal-track img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--ph); border-radius: 0.176rem; }
+.gal-track figure { position: relative; flex: 0 0 100%; margin: 0; scroll-snap-align: start; }
+.gal-track img { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.176rem; }
+/* 사진이 오기 전에는 사진 자리에 안내가 천천히 깜빡여요. 사진이 오면 그 위를 덮어요 */
+.gal-track figure::before { content: "Loading photo…"; position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; background: var(--ph); border-radius: 0.176rem; color: var(--muted); font-style: italic; animation: wait 1.6s ease-in-out infinite; }
+.gal-track figure.missing::before { content: "Photo coming soon"; animation: none; }
+.gal-track figure.failed::before { content: "Couldn’t load this photo. Please refresh the page."; animation: none; }
+.gal-track figure.missing img, .gal-track figure.failed img { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { .gal-track figure::before { animation: none; } }
 .gal-track figcaption { margin-top: 0.353rem; font-size: 0.882rem; color: var(--muted); }
 .gal-btn {
   position: absolute; top: calc(50% - 2.118rem); width: 2.235rem; height: 2.235rem;
@@ -126,9 +132,9 @@ p, li { text-wrap: pretty; }
 
 /* 연구 질문 토글: 누르면 펼쳐져요 */
 /* 연구 주제 제목: 위로 넉넉히 띄우고, 왼쪽 오른쪽을 번갈아 놓아 너무 반듯하지 않게 해요 */
-#research-body h2 { margin-top: 3.765rem; }
+#research-body h2 { margin-top: 5.647rem; }
 #research-body { counter-reset: theme; }
-#research-body h3 { margin-top: 3.529rem; font-size: 1.294rem; counter-increment: theme; }
+#research-body h3 { margin-top: 5.294rem; font-size: 1.294rem; counter-increment: theme; }
 /* 실험 노트처럼 주제마다 빨간 번호(No. 01)와 펜으로 그린 작은 그림이 붙어요 */
 #research-body h3::before { content: "No. " counter(theme, decimal-leading-zero); margin-right: 0.588rem; color: var(--accent); font-family: "Caveat", "Segoe Print", cursive; font-size: 1.118rem; font-weight: 500; vertical-align: 0.059rem; }
 .theme-icon { width: 1.765rem; height: 1.765rem; margin-right: 0.412rem; vertical-align: -0.471rem; }

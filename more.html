@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2">
 <!-- 다크 모드: 저장한 선택, 없으면 컴퓨터 설정을 그리기 전에 바로 적용해요 -->
 <script>var t; try { t = localStorage.getItem('theme'); } catch (e) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');</script>
 </head>
@@ -38,9 +38,9 @@
   <li>Something you teach or organize</li>
   <li>Something you do for fun</li>
 </ul>
-<!-- 사진은 방문자가 처음 움직이면 확인을 거쳐 나와요. 사진 파일은 R2의 photos/hobby, photos/cooking에 있어요 -->
+<!-- 사진은 방문자가 처음 움직이면 확인을 거쳐 나와요. 그전에는 사진 자리에 "Loading photo…"가 보여요. 사진 파일은 R2의 photos/hobby, photos/cooking에 있어요 -->
 <div id="gate" class="gate-box"></div>
-<div class="photos" hidden>
+<div class="photos">
 <h3>Another thing you love</h3>
 <p>A line about it.</p>
 <div class="gallery">
@@ -70,6 +70,6 @@
 <p class="updated">Last updated Nov 2026</p>
 <p class="mail" hidden></p>
 </main>
-<script src="site.js"></script>
+<script src="site.js?v=2"></script>
 </body>
 </html>
