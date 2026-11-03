@@ -94,6 +94,24 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   });
 })();
 
+// 메일 주소: 페이지 글에 통째로 적지 않고, 사람이 처음 움직이면 맨 아래에 누르면 메일 앱이 열리는 링크로 넣어요
+// 조각으로 나눠 두어서 주소를 긁어 가는 봇이 소스에서 찾기 어려워요
+(function () {
+  var box = document.querySelector('.mail');
+  if (!box) return;
+  var events = ['pointermove', 'touchstart', 'scroll', 'keydown'];
+  function show() {
+    events.forEach(function (e) { window.removeEventListener(e, show); });
+    var addr = ['siwawa', ['snu', 'ac', 'kr'].join('.')].join('@');
+    var a = document.createElement('a');
+    a.href = 'mailto:' + addr;
+    a.textContent = addr;
+    box.appendChild(a);
+    box.hidden = false;
+  }
+  events.forEach(function (e) { window.addEventListener(e, show, { passive: true }); });
+})();
+
 // 숨긴 내용: 사람이 처음 움직이면 확인을 거쳐 불러와요
 // More about me에서는 사진, Research Interests에서는 연구 질문 본문과 그림이에요
 // 체크 상자가 필요한 방문자에게는 #gate 자리에 나와요. 연구 질문을 못 불러오면 data-fail 문구를 보여 줘요
