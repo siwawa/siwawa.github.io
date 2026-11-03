@@ -50,6 +50,11 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     return pending;
   };
   window.gateURL = function (path, s) { return GATE.worker + '/file/' + path + '?s=' + encodeURIComponent(s); };
+  // 확인은 페이지가 열리자마자 미리 시작해 둬요. 내용은 여전히 사람이 처음 움직여야 나오지만,
+  // 그때는 확인이 이미 끝나 있어서 바로 불러와요. 미리 하다 실패하면 움직일 때 다시 시도해요
+  if (document.querySelector('#photo, .photos, #research-body, .mail')) {
+    window.gateSession(document.getElementById('gate') || undefined).catch(function () {});
+  }
 })();
 
 // About me 사진: 사람이 처음 움직이면 확인을 거쳐 불러와요
@@ -137,13 +142,15 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   if (!photos && !research) return;
   var gate = document.getElementById('gate');
   var events = ['pointermove', 'scroll', 'touchstart', 'keydown'], started = false;
+  // 휴대폰처럼 좁은 화면은 작은 사진(photos/sm/, 긴 쪽 900px)을 받아요
+  var base = window.matchMedia('(max-width: 640px)').matches ? 'photos/sm/' : 'photos/';
   function showPhotos(s) {
     photos.querySelectorAll('img[data-photo]').forEach(function (img) {
       // R2에 아직 없는 사진은 "Photo coming soon"으로 보여요
       img.addEventListener('error', function () { img.parentNode.classList.add('missing'); });
       img.addEventListener('load', function () { img.parentNode.classList.add('loaded'); });
       // 주소만 적어 두고, 실제로 받는 건 갤러리가 지금 보이는 사진 근처부터 해요
-      img.dataset.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
+      img.dataset.src = window.gateURL(base + img.getAttribute('data-photo'), s);
     });
     photos.hidden = false;
     document.querySelectorAll('.gallery').forEach(function (g) { if (g.update) g.update(); });
