@@ -1,7 +1,8 @@
 // 잠금 설정: Cloudflare 설정을 마친 뒤 이 두 값만 채우세요
 var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x4AAAAAAFwVHGAGYA-JvVyL' };
 
-// 문지기와 통신하는 부분: Turnstile로 확인하고 30분짜리 통행증을 받아요
+// 문지기와 통신하는 부분: Turnstile로 확인하고 하루짜리 통행증을 받아요
+// 통행증은 이 브라우저에 하루 동안 남겨 둬서, 새 탭이나 다시 와도 확인 없이 바로 열리고 받아 둔 사진도 다시 써요
 (function () {
   var pending = null;
   function loadTurnstile() {
@@ -15,7 +16,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   }
   window.gateSession = function (box) {
     try {
-      var c = JSON.parse(sessionStorage.getItem('gate') || 'null');
+      var c = JSON.parse(localStorage.getItem('gate') || 'null');
       if (c && c.exp > Date.now() + 60000) return Promise.resolve(c.session);
     } catch (e) {}
     if (/YOUR-/.test(GATE.worker + GATE.sitekey)) return Promise.reject(new Error('not configured'));
@@ -38,7 +39,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
           callback: function (token) {
             fetch(GATE.worker + '/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: token }) })
               .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('denied')); })
-              .then(function (d) { try { sessionStorage.setItem('gate', JSON.stringify(d)); } catch (e) {} holder.remove(); res(d.session); })
+              .then(function (d) { try { localStorage.setItem('gate', JSON.stringify(d)); } catch (e) {} holder.remove(); res(d.session); })
               .catch(fail);
           },
           'error-callback': function () { fail(new Error('turnstile')); },
