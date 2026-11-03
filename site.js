@@ -69,6 +69,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
 })();
 
 // 사진 갤러리: 버튼으로 한 장씩 넘기고, 몇 번째인지 표시해요
+// 마지막 사진에서 다음을 누르면 첫 사진으로, 첫 사진에서 이전을 누르면 마지막 사진으로 돌아가요
 (function () {
   var smooth = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   document.querySelectorAll('.gallery').forEach(function (g) {
@@ -77,16 +78,14 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     var next = g.querySelector('.next');
     var count = g.querySelector('.gal-count');
     var n = track.children.length;
+    function at() { return track.clientWidth ? Math.round(track.scrollLeft / track.clientWidth) : 0; }
+    function go(i) { track.scrollTo({ left: ((i + n) % n) * track.clientWidth, behavior: smooth }); }
     function update() {
-      var w = track.clientWidth;
-      if (!w) return;
-      var i = Math.round(track.scrollLeft / w);
-      prev.disabled = i <= 0;
-      next.disabled = i >= n - 1;
-      if (count) count.textContent = (i + 1) + ' / ' + n;
+      if (!track.clientWidth) return;
+      if (count) count.textContent = (at() + 1) + ' / ' + n;
     }
-    prev.addEventListener('click', function () { track.scrollBy({ left: -track.clientWidth, behavior: smooth }); });
-    next.addEventListener('click', function () { track.scrollBy({ left: track.clientWidth, behavior: smooth }); });
+    prev.addEventListener('click', function () { go(at() - 1); });
+    next.addEventListener('click', function () { go(at() + 1); });
     track.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
     window.addEventListener('resize', update);
     g.update = update;
