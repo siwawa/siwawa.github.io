@@ -124,6 +124,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     photos.querySelectorAll('img[data-photo]').forEach(function (img) {
       // R2에 아직 없는 사진은 "Photo coming soon"으로 보여요
       img.addEventListener('error', function () { img.parentNode.classList.add('missing'); });
+      img.addEventListener('load', function () { img.parentNode.classList.add('loaded'); });
       if (!img.getAttribute('src')) img.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
     });
     photos.hidden = false;

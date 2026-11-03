@@ -120,6 +120,9 @@ p, li { text-wrap: pretty; }
 .gal-track img { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.176rem; }
 /* 사진이 오기 전에는 사진 자리에 안내가 천천히 깜빡여요. 사진이 오면 그 위를 덮어요 */
 .gal-track figure::before { content: "Loading photo…"; position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; background: var(--ph); border-radius: 0.176rem; color: var(--muted); font-style: italic; animation: wait 1.6s ease-in-out infinite; }
+.gal-track figure.loaded::before { content: ""; animation: none; }
+/* 로고처럼 잘리면 안 되는 그림은 class="fit"을 붙이면 칸 안에 통째로 들어가요 */
+.gal-track img.fit { object-fit: contain; padding: 0.941rem; box-sizing: border-box; }
 .gal-track figure.missing::before { content: "Photo coming soon"; animation: none; }
 .gal-track figure.failed::before { content: "Couldn’t load this photo. Please refresh the page."; animation: none; }
 .gal-track figure.missing img, .gal-track figure.failed img { visibility: hidden; }
