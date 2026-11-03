@@ -128,7 +128,7 @@ p, li { text-wrap: pretty; }
 #research-body { counter-reset: theme; }
 #research-body h3 { margin-top: 2.588rem; counter-increment: theme; }
 /* 실험 노트처럼 주제마다 빨간 번호(No. 01)와 펜으로 그린 작은 그림이 붙어요 */
-#research-body h3::before { content: "No. " counter(theme, decimal-leading-zero); margin-right: 0.588rem; color: var(--accent); font-size: 0.765rem; font-weight: normal; letter-spacing: 0.06em; vertical-align: 0.118rem; }
+#research-body h3::before { content: "No. " counter(theme, decimal-leading-zero); margin-right: 0.588rem; color: var(--accent); font-family: "IBM Plex Mono", Consolas, monospace; font-size: 0.765rem; font-weight: normal; letter-spacing: 0.02em; vertical-align: 0.118rem; }
 .theme-icon { width: 1.765rem; height: 1.765rem; margin-right: 0.412rem; vertical-align: -0.471rem; }
 #research-body h2 + h3 { margin-top: 0.471rem; }
 #research-body h3:nth-of-type(even) { text-align: right; }
@@ -136,8 +136,11 @@ p, li { text-wrap: pretty; }
 details.q { border-top: 1px solid var(--line); }
 details.q summary { position: relative; padding: 0.529rem 0 0.529rem 1.412rem; cursor: pointer; list-style: none; }
 details.q summary::-webkit-details-marker { display: none; }
-details.q summary::before { content: "+"; position: absolute; left: 2px; top: 0.471rem; color: var(--accent); font-weight: bold; }
-details.q[open] summary::before { content: "\2212"; }
+/* + 표시는 막대 두 개로 그려요. 펼치면 세로 막대가 돌아 누워서 − 가 돼요 */
+details.q summary::before, details.q summary::after { content: ""; position: absolute; left: 0.118rem; top: calc(0.529rem + 0.775em - 1px); width: 0.647rem; height: 2px; background: var(--accent); border-radius: 1px; }
+details.q summary::after { transform: rotate(90deg); transition: transform 0.3s ease; }
+details.q[open] summary::after { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { details.q summary::after { transition: none; } }
 details.q summary:hover { color: var(--link); }
 details.q summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 details.q p { margin: 0 0 0.824rem 1.412rem; }
@@ -145,6 +148,10 @@ details.q p { margin: 0 0 0.824rem 1.412rem; }
 /* 잠긴 내용 자리와 연구 질문 그림 */
 /* data-fail 문구 속 줄바꿈(&#10;)도 화면에서 줄이 바뀌어요 */
 .gate-note { color: var(--muted); white-space: pre-line; }
+/* 연구 질문이 오기 전 안내. 천천히 깜빡여서 기다리는 중인 걸 알려 줘요 */
+.gate-note.loading { margin-top: 2.588rem; font-style: italic; animation: wait 1.6s ease-in-out infinite; }
+@keyframes wait { 50% { opacity: 0.4; } }
+@media (prefers-reduced-motion: reduce) { .gate-note.loading { animation: none; } }
 .gate-box { margin-top: 0.471rem; }
 details.q figure { margin: 0.235rem 0 0.706rem 1.412rem; }
 details.q figure img { display: block; width: 100%; max-width: 30.588rem; height: auto; border: 1px solid var(--line); border-radius: 0.235rem; background: #fbf9f4; }

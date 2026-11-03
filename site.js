@@ -145,6 +145,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
       var p = document.createElement('p');
       p.className = 'gate-note';
       p.textContent = research.getAttribute('data-fail');
+      research.innerHTML = '';
       research.appendChild(p);
     });
   }
