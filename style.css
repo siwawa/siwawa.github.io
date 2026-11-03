@@ -132,7 +132,8 @@ p, li { text-wrap: pretty; }
 .theme-icon { width: 1.765rem; height: 1.765rem; margin-right: 0.412rem; vertical-align: -0.471rem; }
 #research-body h2 + h3 { margin-top: 0.471rem; }
 #research-body h3:nth-of-type(even) { text-align: right; }
-.qs { margin: 0.235rem 0 0.471rem; border-bottom: 1px solid var(--line); }
+/* 질문 목록은 위 문단보다 한 칸 들여 써요 (바뀌는 질문 줄과 같은 만큼) */
+.qs { margin: 0.235rem 0 0.471rem 1.412rem; border-bottom: 1px solid var(--line); }
 details.q { border-top: 1px solid var(--line); }
 details.q summary { position: relative; padding: 0.529rem 0 0.529rem 1.412rem; cursor: pointer; list-style: none; }
 details.q summary::-webkit-details-marker { display: none; }
