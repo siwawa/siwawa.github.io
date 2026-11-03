@@ -83,7 +83,10 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     function update() {
       if (!track.clientWidth) return;
       if (count) count.textContent = (at() + 1) + ' / ' + n;
+      var f = track.children[at()];
+      if (f) track.style.height = f.offsetHeight + 'px';
     }
+    track.querySelectorAll('img').forEach(function (img) { img.addEventListener('load', update); });
     prev.addEventListener('click', function () { go(at() - 1); });
     next.addEventListener('click', function () { go(at() + 1); });
     track.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });

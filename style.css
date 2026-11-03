@@ -132,8 +132,10 @@ p, li { text-wrap: pretty; }
 .mail { margin: 0; font-size: 0.765rem; }
 
 /* 사진 갤러리: 휴대폰은 밀어서, 컴퓨터는 버튼으로 넘겨요 */
-.gallery { position: relative; max-width: 30.588rem; margin: 0.588rem auto 0.235rem; }
-.gal-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.gallery { position: relative; max-width: 30.588rem; margin: 0.588rem auto 0.235rem; container-type: inline-size; }
+/* 높이는 지금 보이는 사진 칸에 맞춰 site.js가 정해요 (설명이 긴 칸이 있어도 다른 칸 밑이 비지 않게) */
+.gal-track { display: flex; align-items: flex-start; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; transition: height 0.3s ease; }
+@media (prefers-reduced-motion: reduce) { .gal-track { transition: none; } }
 .gal-track::-webkit-scrollbar { display: none; }
 .gal-track figure { position: relative; flex: 0 0 100%; margin: 0; scroll-snap-align: start; }
 .gal-track img { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.176rem; }
@@ -147,8 +149,10 @@ p, li { text-wrap: pretty; }
 .gal-track figure.missing img, .gal-track figure.failed img { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) { .gal-track figure::before { animation: none; } }
 .gal-track figcaption { margin-top: 0.353rem; font-size: 0.882rem; color: var(--muted); }
+/* 사진에 딸린 긴 이야기는 본문과 같은 글씨로 사진 밑에 붙어서 같이 넘어가요 */
+.gal-track figcaption.story { margin-top: 0.588rem; font-size: 1rem; color: var(--fg); }
 .gal-btn {
-  position: absolute; top: calc(50% - 2.118rem); width: 2.235rem; height: 2.235rem;
+  position: absolute; top: calc(37.5cqw - 1.118rem); width: 2.235rem; height: 2.235rem;
   border: 1px solid var(--line); border-radius: 50%; background: var(--bg); color: var(--fg);
   font: inherit; font-size: 1.529rem; line-height: 1; padding: 0 0 0.176rem; cursor: pointer; opacity: 0.92;
 }
