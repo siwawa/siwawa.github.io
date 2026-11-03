@@ -112,6 +112,10 @@ p, li { text-wrap: pretty; }
 .cv-head .meta { margin: 0; }
 .cv > .meta { margin: 0 0 0.235rem; }
 .cv ul { margin: 0.235rem 0 0; }
+/* 연구한 곳 목록: 한 줄에 이름과 기간 */
+.labs { margin: 0 0 0.353rem; padding: 0; list-style: none; }
+.labs li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 0.941rem; margin-bottom: 0.471rem; }
+.labs .meta { margin: 0; }
 /* 맨 아래 도마뱀 띠 */
 .lizards { display: block; width: 100%; height: 6.471rem; margin-top: 2.588rem; border-top: 1px solid var(--line); }
 .updated { margin: 0.588rem 0 0.176rem; font-size: 0.765rem; color: var(--muted); }
@@ -159,6 +163,9 @@ p, li { text-wrap: pretty; }
 /* 연구 질문을 다 읽고 난 맨 아래 마무리 문단 */
 #research-body .closing { margin-top: 5.294rem; }
 #research-body h3:nth-of-type(even) { text-align: right; }
+/* Research Experience 자세한 설명에서는 제목 밑 지도교수와 기간 줄도 제목 쪽에 붙어요 */
+#research-body h3 + .meta { margin-top: -0.118rem; }
+#research-body h3:nth-of-type(even) + .meta { text-align: right; }
 /* 질문 목록은 위 문단보다 한 칸 들여 써요 (바뀌는 질문 줄과 같은 만큼) */
 .qs { margin: 0.235rem 0 0.471rem 1.412rem; border-bottom: 1px solid var(--line); }
 details.q { border-top: 1px solid var(--line); }

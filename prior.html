@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <!-- 다크 모드: 저장한 선택, 없으면 컴퓨터 설정을 그리기 전에 바로 적용해요 -->
 <script>var t; try { t = localStorage.getItem('theme'); } catch (e) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');</script>
 </head>
@@ -31,48 +31,26 @@
 </header>
 <main>
 <h2>Research Experience</h2>
-<!-- CV의 Research Experience, Publications & Presented Work와 같은 내용이에요 -->
-<div class="cv">
-  <p class="cv-head"><strong>Center for RNA Research</strong><span class="meta">Feb 2025 to present</span></p>
-  <p class="meta">Advised by Prof. V. Narry Kim and Dr. Yeonwoo Park</p>
-  <ul>
-    <li>Leading a systematic study of how microRNA processing evolves across jawed vertebrates, with a focus on <strong>system drift</strong>. Reconstructed historical changes and inferred selection on their phenotypic effects.</li>
-    <li>Building a phylogenetic tree of the TENT family, which has <strong>deep homologies</strong> across the eukaryotic tree of life.</li>
-    <li>Analyzed high-throughput screens of hundreds of thousands of candidate self-cleaving ribozymes and <strong>identified an artifact</strong> with troubleshooting experiments.</li>
-  </ul>
-</div>
-<div class="cv">
-  <p class="cv-head"><strong>Laboratory of Computational Structural and Systems Biology</strong><span class="meta">Jan to Mar 2024, Aug 2024 to Jan 2025</span></p>
-  <p class="meta">Advised by Prof. Minkyung Baek</p>
-  <ul>
-    <li>Developed a structure-guided MSA augmentation approach using Foldseek to recover <strong>structurally related remote homologs</strong> for AlphaFold2 protein structure prediction.</li>
-    <li>Proposed a framework for <strong>reconstructing viable evolutionary trajectories</strong> of viral spike proteins by using computational protein design to exclude structurally unstable intermediates.</li>
-  </ul>
-</div>
-<div class="cv">
-  <p class="cv-head"><strong>Saengjins (Ecology and Evolution Research Society)</strong><span class="meta">Mar to Nov 2024</span></p>
-  <p class="meta">Advised by Prof. Youngsung Joo</p>
-  <ul>
-    <li>Tested the hypothesis of adult <strong>paper-wasp mimicry in the bean bug</strong> (<i>Riptortus pedestris</i>) by quantifying flight posture and acoustic signals, finding insufficient support for adult mimicry.</li>
-  </ul>
-</div>
-<div class="cv">
-  <p class="cv-head"><strong>Laboratory of Population Genomics</strong><span class="meta">Jul to Aug 2023</span></p>
-  <p class="meta">Advised by Prof. Choongwon Jeong</p>
-  <ul>
-    <li>Characterized population structure and <strong>admixture</strong> between domestic chickens and Red Junglefowl.</li>
-  </ul>
-</div>
+<!-- 어디에서 연구했는지만 한 줄씩 적어요. 자세한 설명은 아래 Detailed Research Experience에 있고, 그 본문은 R2의 content/prior.html이에요 -->
+<ul class="labs">
+  <li><strong>Center for RNA Research</strong><span class="meta">Feb 2025 to present</span></li>
+  <li><strong>Laboratory of Computational Structural and Systems Biology</strong><span class="meta">Jan to Mar 2024, Aug 2024 to Jan 2025</span></li>
+  <li><strong>Saengjins (Ecology and Evolution Research Society)</strong><span class="meta">Mar to Nov 2024</span></li>
+  <li><strong>Laboratory of Population Genomics</strong><span class="meta">Jul to Aug 2023</span></li>
+</ul>
 <h3>Publications &amp; Presentations</h3>
 <ul class="pubs">
   <li>Yeonwoo Park, Soo Hyun Kim, <b>Hayoung Lee</b>, Seongjae Kim, Marcos de la Peña, Martin Steinegger, Narry Kim (2026). Metagenomic screen uncovers nine new self-cleaving ribozyme classes and a circular RNA pathway induced by tandem ribozymes. <i>Manuscript under review.</i></li>
   <li>Soohyun Jo, <b>Hayoung Lee</b>, Heesoo Ki, Min Su Yoon, Jeonghoon Park, Minkyung Baek (2024). Structure-Guided MSA Generation for Protein Structure Prediction. <i>CASP16 Poster Presentation.</i></li>
   <li>Jaeseung Kim, <b>Hayoung Lee</b>, Youngsung Joo (2024). Buzzing sound and flight posture of the bean bug (<i>Riptortus pedestris</i>), insufficient evidence for paper wasp mimicry. <i>SNU Biodiversity Workshop &amp; SNU 39th Undergraduate Research Program.</i></li>
 </ul>
+<div id="gate" class="gate-box"></div>
+<div id="research-body" data-gate="content/prior.html" data-fail="Sorry, the details of my research couldn’t load. Please refresh the page to try again.&#10;If it keeps failing, an ad blocker or privacy extension may be in the way, so try turning it off or using another browser. You can also email me at siwawa [at] snu [dot] ac [dot] kr."><p class="gate-note loading">Loading the details of my research. This takes a moment…</p></div>
+<noscript><p class="gate-note">This page needs JavaScript to show the details of my research. Feel free to email me at siwawa [at] snu [dot] ac [dot] kr.</p></noscript>
 <canvas class="lizards" aria-hidden="true"></canvas>
 <p class="updated">Last updated Nov 2026</p>
 <p class="mail" hidden></p>
 </main>
-<script src="site.js?v=4"></script>
+<script src="site.js?v=5"></script>
 </body>
 </html>
