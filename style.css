@@ -116,6 +116,11 @@ p, li { text-wrap: pretty; }
 .labs { margin: 0 0 0.353rem; padding: 0; list-style: none; }
 .labs li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 0.941rem; margin-bottom: 0.471rem; }
 .labs .meta { margin: 0; }
+/* 연구실 이름 링크: 평소엔 굵은 글씨만, 마우스를 올리면 밑줄. 옆의 작은 ↗ 로 누를 수 있다는 걸 알려요 */
+.labs a { color: inherit; text-decoration: none; }
+.labs a::after { content: "\2197"; margin-left: 0.235rem; color: var(--muted); font-size: 0.824rem; font-weight: normal; }
+.labs a:hover { color: var(--link); text-decoration: underline; }
+.labs a:hover::after { color: var(--link); }
 /* 연구한 곳 목록 다음 제목(Publications & Presentations)은 위로 띄워요 */
 .labs + h2 { margin-top: 2.824rem; }
 /* 맨 아래 도마뱀 띠 */
