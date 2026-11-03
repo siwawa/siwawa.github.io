@@ -1,3 +1,5 @@
+/* 글꼴도 여기서 불러와요. 본문 Source Sans 3, 노트 번호 Caveat. 글꼴을 바꿀 땐 이 줄과 아래 font-family만 고치면 돼요 */
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500&display=swap");
 /* 모든 페이지가 이 파일 하나를 같이 써요. 색은 여기 맨 위에서만 바꾸면 돼요 */
 :root {
   /* 실험 노트: 파란 볼펜 잉크, 초록 펜 밑줄과 여백선 */
