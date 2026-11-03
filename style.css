@@ -132,18 +132,19 @@ p, li { text-wrap: pretty; }
 .mail { margin: 0; font-size: 0.765rem; }
 
 /* 사진 갤러리: 휴대폰은 밀어서, 컴퓨터는 버튼으로 넘겨요 */
-.gallery { position: relative; max-width: 30.588rem; margin: 0.588rem auto 0.235rem; container-type: inline-size; }
+/* 갤러리는 본문 폭을 다 쓰고, 사진은 가운데 4:3 칸(최대 폭 32.941rem)에 둬요. 남는 양옆은 은은한 띠로 채워서 설명 글이 넓게 들어가요 */
+.gallery { position: relative; margin: 0.588rem 0 0.235rem; container-type: inline-size; --photo-w: 32.941rem; --photo-h: min(75cqw, calc(var(--photo-w) * 0.75)); --band: max(0px, calc((100% - var(--photo-w)) / 2)); }
 /* 높이는 지금 보이는 사진 칸에 맞춰 site.js가 정해요 (설명이 긴 칸이 있어도 다른 칸 밑이 비지 않게) */
 .gal-track { display: flex; align-items: flex-start; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; transition: height 0.3s ease; }
 @media (prefers-reduced-motion: reduce) { .gal-track { transition: none; } }
 .gal-track::-webkit-scrollbar { display: none; }
 .gal-track figure { position: relative; flex: 0 0 100%; margin: 0; scroll-snap-align: start; }
-.gal-track img { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.176rem; }
+.gal-track img { position: relative; display: block; width: 100%; height: var(--photo-h); padding: 0 var(--band); box-sizing: border-box; object-fit: cover; background: var(--ph); border-radius: 0.176rem; }
 /* 사진이 오기 전에는 사진 자리에 안내가 천천히 깜빡여요. 사진이 오면 그 위를 덮어요 */
-.gal-track figure::before { content: "Loading photo…"; position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; background: var(--ph); border-radius: 0.176rem; color: var(--muted); font-style: italic; animation: wait 1.6s ease-in-out infinite; }
+.gal-track figure::before { content: "Loading photo…"; position: absolute; left: 0; top: 0; width: 100%; height: var(--photo-h); display: flex; align-items: center; justify-content: center; background: var(--ph); border-radius: 0.176rem; color: var(--muted); font-style: italic; animation: wait 1.6s ease-in-out infinite; }
 .gal-track figure.loaded::before { content: ""; animation: none; }
 /* 로고처럼 잘리면 안 되는 그림은 class="fit"을 붙이면 칸 안에 통째로 들어가요 */
-.gal-track img.fit { object-fit: contain; padding: 0.941rem; box-sizing: border-box; }
+.gal-track img.fit { object-fit: contain; padding: 0.941rem max(0.941rem, var(--band)); }
 .gal-track figure.missing::before { content: "Photo coming soon"; animation: none; }
 .gal-track figure.failed::before { content: "Couldn’t load this photo. Please refresh the page."; animation: none; }
 .gal-track figure.missing img, .gal-track figure.failed img { visibility: hidden; }
@@ -152,7 +153,7 @@ p, li { text-wrap: pretty; }
 /* 사진에 딸린 긴 이야기는 본문과 같은 글씨로 사진 밑에 붙어서 같이 넘어가요 */
 .gal-track figcaption.story { margin-top: 0.588rem; font-size: 1rem; color: var(--fg); }
 .gal-btn {
-  position: absolute; top: calc(37.5cqw - 1.118rem); width: 2.235rem; height: 2.235rem;
+  position: absolute; top: calc(var(--photo-h) / 2 - 1.118rem); width: 2.235rem; height: 2.235rem;
   border: 1px solid var(--line); border-radius: 50%; background: var(--bg); color: var(--fg);
   font: inherit; font-size: 1.529rem; line-height: 1; padding: 0 0 0.176rem; cursor: pointer; opacity: 0.92;
 }
