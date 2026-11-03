@@ -114,7 +114,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
 // 숨긴 내용: 사람이 처음 움직이면 확인을 거쳐 불러와요
 // More about me에서는 사진, Research Interests에서는 연구 질문 본문과 그림, Research Experience에서는 자세한 연구 설명이에요
 // #research-body의 data-gate가 R2에서 불러올 파일이에요
-// 체크 상자가 필요한 방문자에게는 #gate 자리에 나와요. 연구 질문을 못 불러오면 data-fail 문구를 보여 줘요
+// 체크 상자가 필요한 방문자에게는 #gate 자리에 나와요. 못 불러오면 data-fail 문구를 보여 줘요
 (function () {
   var photos = document.querySelector('.photos'), research = document.getElementById('research-body');
   if (!photos && !research) return;
@@ -146,6 +146,13 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     }).catch(function () {
       if (!research) {
         photos.querySelectorAll('figure').forEach(function (f) { f.classList.add('failed'); });
+        // 사진을 못 불러오면 사진 위에 data-fail 문구를 한 번 보여 줘요
+        if (photos.getAttribute('data-fail') && !photos.querySelector('.gate-note')) {
+          var note = document.createElement('p');
+          note.className = 'gate-note';
+          note.textContent = photos.getAttribute('data-fail');
+          photos.insertBefore(note, photos.firstChild);
+        }
         return;
       }
       var p = document.createElement('p');

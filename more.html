@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 <!-- 다크 모드: 저장한 선택, 없으면 컴퓨터 설정을 그리기 전에 바로 적용해요 -->
 <script>var t; try { t = localStorage.getItem('theme'); } catch (e) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');</script>
 </head>
@@ -31,17 +31,18 @@
 </header>
 <main>
 <h2>More about me</h2>
+<p>Outside the lab, I really enjoy cooking and playing board games with my friends. Below are a few fun photos and random facts about me.</p>
 <!-- 사진은 방문자가 처음 움직이면 확인을 거쳐 나와요. 그전에는 사진 자리에 "Loading photo…"가 보여요. 사진 파일은 R2의 photos/hobby, photos/cooking에 있어요 -->
 <div id="gate" class="gate-box"></div>
-<div class="photos">
-<h3>Life outside the lab</h3>
+<div class="photos" data-fail="Sorry, my photos couldn’t load. Please refresh the page to try again.&#10;If it keeps failing, an ad blocker or privacy extension may be in the way, so try turning it off or using another browser. You can also email me at siwawa [at] snu [dot] ac [dot] kr.">
+<h2>Life outside the lab</h2>
 <div class="gallery">
   <div class="gal-track">
+    <figure><img class="fit" data-photo="hobby/saengjins_logo.png" alt="The Saengjins logo"><figcaption>Saengjins logo</figcaption></figure>
     <figure><img data-photo="hobby/feriswheel.jpg" alt="A Ferris wheel"><figcaption>Ferris wheel</figcaption></figure>
     <figure><img data-photo="hobby/graduation_not.jpg" alt="Not quite a graduation"><figcaption>Not graduation (yet)</figcaption></figure>
     <figure><img data-photo="hobby/igloo.jpg" alt="An igloo"><figcaption>Igloo</figcaption></figure>
     <figure><img data-photo="hobby/rain.jpg" alt="Rain"><figcaption>Rain</figcaption></figure>
-    <figure><img class="fit" data-photo="hobby/saengjins_logo.png" alt="The Saengjins logo"><figcaption>Saengjins logo</figcaption></figure>
     <figure><img data-photo="hobby/sleeping.jpg" alt="Sleeping"><figcaption>Sleeping</figcaption></figure>
     <figure><img data-photo="hobby/tree.jpg" alt="A tree"><figcaption>Tree</figcaption></figure>
   </div>
@@ -49,7 +50,7 @@
   <button class="gal-btn next" type="button" aria-label="Next photo">&rsaquo;</button>
   <p class="gal-count"></p>
 </div>
-<h3>Cooking</h3>
+<h2>Cooking</h2>
 <div class="gallery">
   <div class="gal-track">
     <figure><img data-photo="cooking/galbi.jpg" alt="Galbi"><figcaption>Galbi</figcaption></figure>
@@ -79,6 +80,6 @@
 <p class="updated">Last updated Nov 2026</p>
 <p class="mail" hidden></p>
 </main>
-<script src="site.js?v=6"></script>
+<script src="site.js?v=7"></script>
 </body>
 </html>

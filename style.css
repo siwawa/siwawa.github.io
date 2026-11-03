@@ -159,6 +159,9 @@ p, li { text-wrap: pretty; }
 .gal-count { margin: 0.235rem 0 0; font-size: 0.824rem; color: var(--muted); text-align: right; }
 
 .photos[hidden] { display: none; }
+/* More about me의 갤러리 제목은 페이지 제목과 같은 크기예요 */
+.photos h2 { margin-top: 2.824rem; }
+.photos > .gate-note { margin-top: 1.412rem; }
 /* 사진 다음 맨 끝 메일 안내 한 줄 */
 .photos + .closing { margin-top: 2.824rem; }
 
