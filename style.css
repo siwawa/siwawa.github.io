@@ -90,6 +90,8 @@ main h3 { clear: both; }
 .news { list-style: none; padding: 0; }
 .news li { display: grid; grid-template-columns: 4.941rem 1fr; gap: 0.706rem; margin-bottom: 0.471rem; }
 .news .date { color: var(--muted); }
+/* News의 핵심 이름은 굵게 하지 않고 초록 펜 색으로만 칠해요 */
+.news strong { font-weight: normal; color: var(--accent); }
 /* 두 줄로 넘어갈 때 두 줄 길이를 비슷하게 맞춰서 마지막 줄에 단어 하나만 남지 않게 해요. 화면 폭이 바뀌어도 알아서 맞춰요 */
 .news li > span:last-child { text-wrap: balance; }
 p, li { text-wrap: pretty; }
