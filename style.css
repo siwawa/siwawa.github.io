@@ -36,9 +36,8 @@ body {
   background-color: var(--bg);
   background-image: var(--grain);
   color: var(--fg);
-  /* 본문 글꼴은 Newsreader(학술지 같은 세리프). 글자가 작게 보여서 조금 키워요 */
-  font-family: "Newsreader", Georgia, "Times New Roman", serif;
-  font-size: 1.059rem;
+  font-family: "Source Sans 3", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
   line-height: 1.55;
 }
 a { color: var(--link); }
@@ -129,7 +128,7 @@ p, li { text-wrap: pretty; }
 #research-body { counter-reset: theme; }
 #research-body h3 { margin-top: 2.588rem; counter-increment: theme; }
 /* 실험 노트처럼 주제마다 빨간 번호(No. 01)와 펜으로 그린 작은 그림이 붙어요 */
-#research-body h3::before { content: "No. " counter(theme, decimal-leading-zero); margin-right: 0.588rem; color: var(--accent); font-family: "IBM Plex Mono", Consolas, monospace; font-size: 0.765rem; font-weight: normal; letter-spacing: 0.02em; vertical-align: 0.118rem; }
+#research-body h3::before { content: "No. " counter(theme, decimal-leading-zero); margin-right: 0.588rem; color: var(--accent); font-family: "Caveat", "Segoe Print", cursive; font-size: 1.118rem; font-weight: 500; vertical-align: 0.059rem; }
 .theme-icon { width: 1.765rem; height: 1.765rem; margin-right: 0.412rem; vertical-align: -0.471rem; }
 #research-body h2 + h3 { margin-top: 0.471rem; }
 #research-body h3:nth-of-type(even) { text-align: right; }
