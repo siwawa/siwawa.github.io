@@ -1,14 +1,14 @@
 /* 모든 페이지가 이 파일 하나를 같이 써요. 색은 여기 맨 위에서만 바꾸면 돼요 */
 :root {
-  /* 실험 노트: 파란 볼펜 잉크, 빨간 여백선 */
+  /* 실험 노트: 파란 볼펜 잉크, 초록 펜 밑줄과 여백선 */
   --bg: #ffffff;
   --bar: #eef2fb;
   --fg: #1b2340;
   --muted: #5a6280;
-  --accent: #d64541;
+  --accent: #3a7d50;
   --link: #2f55d4;
   --line: #d9dfef;
-  --margin: #e8a3a0;
+  --margin: #9cc9a8;
   --barline: #b9c7ea;
   --ph: #e8ecf6;
   --grain: none;
@@ -20,10 +20,10 @@
   --bar: #1b2340;
   --fg: #e3e8f6;
   --muted: #9aa3c0;
-  --accent: #e8635e;
+  --accent: #74c08d;
   --link: #8fa8f5;
   --line: #2c3558;
-  --margin: #7a3a3c;
+  --margin: #2f5c40;
   --barline: #33406b;
   --ph: #222a45;
   color-scheme: dark;
