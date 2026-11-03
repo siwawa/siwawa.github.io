@@ -231,8 +231,8 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
 // 페이지 맨 아래 도마뱀: 구석의 점박이 돌, 벌레 사냥, 밤에는 돌 옆에서 잠
 (function () {
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var cols = ['#7d9a6a', '#b98a55', '#7f97b5', '#c4a24f', '#a4796f'];
-  // 힘 = 색의 밝기(가장 밝은 채널). 노랑 > 주황 > 파랑 > 적갈색 > 초록
+  var cols = ['#7d9a6a', '#b98a55', '#7f97b5', '#c4a24f', '#a4796f', '#8e7fa8', '#6f9e98'];
+  // 힘 = 색의 밝기(가장 밝은 채널). 노랑 > 주황 > 파랑 > 보라 > 적갈색 > 청록 > 초록
   function bright(c) { return Math.max(parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)); }
   var hr = new Date().getHours();
   var nightNow = hr >= 20 || hr < 6;
