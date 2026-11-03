@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 <!-- 다크 모드: 저장한 선택, 없으면 컴퓨터 설정을 그리기 전에 바로 적용해요 -->
 <script>var t; try { t = localStorage.getItem('theme'); } catch (e) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');</script>
 </head>
@@ -31,32 +31,49 @@
 </header>
 <main>
 <h2>Prior Research</h2>
-<!-- 회색 상자 자리에 <img src="assets/figures/파일이름.png" alt="설명"> 을 넣으면 그림이 들어가요 -->
-<div class="entry">
-  <div class="thumb"></div>
-  <div>
-    <h3>Project title</h3>
-    <p class="meta">With Collaborator, Example Lab, 2025 to now</p>
-    <p>What the project asked, what you did, and what you found.</p>
-  </div>
+<!-- CV의 Research Experience, Publications & Presented Work와 같은 내용이에요 -->
+<h3>Research Internship</h3>
+<div class="cv">
+  <p class="cv-head"><strong>Center for RNA Research</strong><span class="meta">Feb 2025 to present</span></p>
+  <p class="meta">Advised by Prof. V. Narry Kim and Dr. Yeonwoo Park</p>
+  <ul>
+    <li>Leading a systematic study of how microRNA processing evolves across jawed vertebrates, with a focus on <strong>system drift</strong>. Reconstructed historical changes and inferred selection on their phenotypic effects.</li>
+    <li>Building a phylogenetic tree of the TENT family, which has <strong>deep homologies</strong> across the eukaryotic tree of life.</li>
+    <li>Analyzed high-throughput screens of hundreds of thousands of candidate self-cleaving ribozymes and <strong>identified an artifact</strong> with troubleshooting experiments.</li>
+  </ul>
 </div>
-<div class="entry">
-  <div class="thumb"></div>
-  <div>
-    <h3>Another project</h3>
-    <p class="meta">With Collaborator, Example Lab, 2024</p>
-    <p>What the project asked, what you did, and what you found.</p>
-  </div>
+<div class="cv">
+  <p class="cv-head"><strong>Laboratory of Computational Structural and Systems Biology</strong><span class="meta">Jan to Mar 2024, Aug 2024 to Jan 2025</span></p>
+  <p class="meta">Advised by Prof. Minkyung Baek</p>
+  <ul>
+    <li>Developed a structure-guided MSA augmentation approach using Foldseek to recover <strong>structurally related remote homologs</strong> for AlphaFold2 protein structure prediction.</li>
+    <li>Proposed a framework for <strong>reconstructing viable evolutionary trajectories</strong> of viral spike proteins by using computational protein design to exclude structurally unstable intermediates.</li>
+  </ul>
 </div>
-<h3>Publications and talks</h3>
+<div class="cv">
+  <p class="cv-head"><strong>Saengjins (Ecology and Evolution Research Society)</strong><span class="meta">Mar to Nov 2024</span></p>
+  <p class="meta">Advised by Prof. Youngsung Joo</p>
+  <ul>
+    <li>Tested the hypothesis of adult <strong>paper-wasp mimicry in the bean bug</strong> (<i>Riptortus pedestris</i>) by quantifying flight posture and acoustic signals, finding insufficient support for adult mimicry.</li>
+  </ul>
+</div>
+<div class="cv">
+  <p class="cv-head"><strong>Laboratory of Population Genomics</strong><span class="meta">Jul to Aug 2023</span></p>
+  <p class="meta">Advised by Prof. Choongwon Jeong</p>
+  <ul>
+    <li>Characterized population structure and <strong>admixture</strong> between domestic chickens and Red Junglefowl.</li>
+  </ul>
+</div>
+<h3>Publications &amp; Presentations</h3>
 <ul class="pubs">
-  <li>Author A, <b>Hayoung Lee</b>, Author C. Title of the paper. <i>Journal or preprint server</i>, 2026. [<a href="#">pdf</a>]</li>
-  <li><b>Hayoung Lee</b>. Title of the talk or poster. <i>Meeting name</i>, City, 2026.</li>
+  <li>Yeonwoo Park, Soo Hyun Kim, <b>Hayoung Lee</b>, Seongjae Kim, Marcos de la Peña, Martin Steinegger, Narry Kim (2026). Metagenomic screen uncovers nine new self-cleaving ribozyme classes and a circular RNA pathway induced by tandem ribozymes. <i>Manuscript under review.</i></li>
+  <li>Soohyun Jo, <b>Hayoung Lee</b>, Heesoo Ki, Min Su Yoon, Jeonghoon Park, Minkyung Baek (2024). Structure-Guided MSA Generation for Protein Structure Prediction. <i>CASP16 Poster Presentation.</i></li>
+  <li>Jaeseung Kim, <b>Hayoung Lee</b>, Youngsung Joo (2024). Buzzing sound and flight posture of the bean bug (<i>Riptortus pedestris</i>), insufficient evidence for paper wasp mimicry. <i>SNU Biodiversity Workshop &amp; SNU 39th Undergraduate Research Program.</i></li>
 </ul>
 <canvas class="lizards" aria-hidden="true"></canvas>
 <p class="updated">Last updated Nov 2026</p>
 <p class="mail" hidden></p>
 </main>
-<script src="site.js?v=2"></script>
+<script src="site.js?v=3"></script>
 </body>
 </html>
