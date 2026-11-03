@@ -78,7 +78,7 @@ li { margin-bottom: 0.235rem; }
 .portrait { width: 100%; aspect-ratio: 3 / 1; margin: 0 0 1.412rem; background: var(--ph); visibility: hidden; border-radius: 0.176rem; overflow: hidden; }
 .portrait.loaded { visibility: visible; }
 .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
-#news { margin: 2.588rem 0 0.941rem; }
+#news { margin: 2.588rem 0 2.353rem; }
 /* 노트에 빨간 펜으로 구불구불 밑줄을 그은 것처럼 강조해요. 글자에서 조금 떨어뜨려 놓아요 */
 .mark { text-decoration: underline wavy 0.147rem var(--accent); text-underline-offset: 0.353rem; text-decoration-skip-ink: none; }
 main h3 { clear: both; }
