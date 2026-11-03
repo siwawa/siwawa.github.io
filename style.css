@@ -111,15 +111,6 @@ main h3 { clear: both; }
 .gal-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .gal-count { margin: 0.235rem 0 0; font-size: 0.824rem; color: var(--muted); text-align: right; }
 
-/* 도마뱀을 눌러야 사진이 나와요 */
-.lock { display: flex; align-items: center; gap: 0.824rem; margin: 2.588rem 0 0.471rem; }
-.lizard { flex: none; width: 4.235rem; height: 4.235rem; padding: 0.412rem; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); cursor: pointer; }
-.lizard img { display: block; width: 100%; height: 100%; }
-[data-theme="dark"] .lizard img { filter: invert(1) hue-rotate(180deg); }
-.lizard:hover { border-color: var(--accent); }
-.lizard:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-/* data-fail 문구 속 줄바꿈(&#10;)도 화면에서 줄이 바뀌어요 */
-.lock-hint { margin: 0; color: var(--muted); font-style: italic; white-space: pre-line; }
 .photos[hidden] { display: none; }
 
 /* 연구 질문 토글: 누르면 펼쳐져요 */
@@ -134,7 +125,8 @@ details.q summary:focus-visible { outline: 2px solid var(--accent); outline-offs
 details.q p { margin: 0 0 0.824rem 1.412rem; }
 
 /* 잠긴 내용 자리와 연구 질문 그림 */
-.gate-note { color: var(--muted); }
+/* data-fail 문구 속 줄바꿈(&#10;)도 화면에서 줄이 바뀌어요 */
+.gate-note { color: var(--muted); white-space: pre-line; }
 .gate-box { margin-top: 0.471rem; }
 details.q figure { margin: 0.235rem 0 0.706rem 1.412rem; }
 details.q figure img { display: block; width: 100%; max-width: 30.588rem; height: auto; border: 1px solid var(--line); border-radius: 0.235rem; background: #fbf9f4; }

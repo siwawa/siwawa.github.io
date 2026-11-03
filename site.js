@@ -94,33 +94,14 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   });
 })();
 
-// 도마뱀을 누르면 확인을 거쳐 숨긴 내용을 불러와요
+// 숨긴 내용: 사람이 처음 움직이면 확인을 거쳐 불러와요
 // More about me에서는 사진, Research Interests에서는 연구 질문 본문과 그림이에요
-// 누르기 전, 다 나온 뒤, 실패했을 때 문구는 HTML의 .lock-hint와 data-done, data-fail에 있어요
+// 체크 상자가 필요한 방문자에게는 #gate 자리에 나와요. 연구 질문을 못 불러오면 data-fail 문구를 보여 줘요
 (function () {
-  var btn = document.querySelector('.lizard'), hint = document.querySelector('.lock-hint');
-  if (!btn || !hint) return;
   var photos = document.querySelector('.photos'), research = document.getElementById('research-body');
-  var gate = document.getElementById('lock-gate');
-  var done = false, ready = null;
-  // 기다리지 않게: 방문자가 처음 움직이면 뒤에서 미리 확인하고 연구 질문 본문도 받아 둬요
-  // 체크 상자가 필요하면 도마뱀을 누른 뒤에야 보여요
-  if (gate) gate.hidden = true;
-  var events = ['pointermove', 'scroll', 'touchstart', 'keydown'];
-  function prepare() {
-    events.forEach(function (e) { window.removeEventListener(e, prepare); });
-    if (ready) return ready;
-    ready = window.gateSession(gate || document.body).then(function (s) {
-      return research ? fetchResearch(s).then(function (html) { return { s: s, html: html }; }) : { s: s };
-    });
-    ready.catch(function () { ready = null; });
-    return ready;
-  }
-  events.forEach(function (e) { window.addEventListener(e, prepare, { passive: true }); });
-  function fetchResearch(s) {
-    return fetch(window.gateURL(research.getAttribute('data-gate'), s))
-      .then(function (r) { if (!r.ok) throw new Error('load'); return r.text(); });
-  }
+  if (!photos && !research) return;
+  var gate = document.getElementById('gate');
+  var events = ['pointermove', 'scroll', 'touchstart', 'keydown'], started = false;
   function showPhotos(s) {
     photos.querySelectorAll('img[data-photo]').forEach(function (img) {
       if (!img.getAttribute('src')) img.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
@@ -128,24 +109,28 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     photos.hidden = false;
     document.querySelectorAll('.gallery').forEach(function (g) { if (g.update) g.update(); });
   }
-  function showResearch(s, html) {
-    research.innerHTML = html;
-    research.querySelectorAll('img[data-gate]').forEach(function (img) { img.src = window.gateURL(img.getAttribute('data-gate'), s); });
+  function showResearch(s) {
+    return fetch(window.gateURL(research.getAttribute('data-gate'), s))
+      .then(function (r) { if (!r.ok) throw new Error('load'); return r.text(); })
+      .then(function (html) {
+        research.innerHTML = html;
+        research.querySelectorAll('img[data-gate]').forEach(function (img) { img.src = window.gateURL(img.getAttribute('data-gate'), s); });
+      });
   }
-  btn.addEventListener('click', function () {
-    if (btn.disabled || done) return;
-    btn.disabled = true;
-    if (gate) gate.hidden = false;
-    hint.textContent = 'One moment…';
-    prepare().then(function (p) {
-      if (research) showResearch(p.s, p.html); else showPhotos(p.s);
-    }).then(function () {
-      done = true;
-      hint.textContent = hint.getAttribute('data-done');
+  function load() {
+    if (started) return; started = true;
+    events.forEach(function (e) { window.removeEventListener(e, load); });
+    window.gateSession(gate || document.body).then(function (s) {
+      return research ? showResearch(s) : showPhotos(s);
     }).catch(function () {
-      hint.textContent = hint.getAttribute('data-fail');
-    }).then(function () { btn.disabled = false; });
-  });
+      if (!research) return;
+      var p = document.createElement('p');
+      p.className = 'gate-note';
+      p.textContent = research.getAttribute('data-fail');
+      research.appendChild(p);
+    });
+  }
+  events.forEach(function (e) { window.addEventListener(e, load, { passive: true }); });
 })();
 
 // 바뀌는 단어: data-words에 | 로 나눈 단어를 3초마다 하나씩 보여 줘요
