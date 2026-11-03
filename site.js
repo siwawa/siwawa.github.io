@@ -79,12 +79,21 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     var count = g.querySelector('.gal-count');
     var n = track.children.length;
     function at() { return track.clientWidth ? Math.round(track.scrollLeft / track.clientWidth) : 0; }
-    function go(i) { track.scrollTo({ left: ((i + n) % n) * track.clientWidth, behavior: smooth }); }
+    function go(i) { near(i); track.scrollTo({ left: ((i + n) % n) * track.clientWidth, behavior: smooth }); }
     function update() {
       if (!track.clientWidth) return;
       if (count) count.textContent = (at() + 1) + ' / ' + n;
       var f = track.children[at()];
       if (f) track.style.height = f.offsetHeight + 'px';
+      near();
+    }
+    // 지금 사진과 바로 앞뒤 사진만 받아요. 나머지는 넘길 때 받아요 (data-src는 확인을 통과한 뒤 채워져요)
+    function near(i) {
+      if (i === undefined) i = at();
+      [i, i + 1, i - 1].forEach(function (k) {
+        var img = track.children[(k + n) % n].querySelector('img');
+        if (img && img.dataset.src && !img.getAttribute('src')) img.src = img.dataset.src;
+      });
     }
     track.querySelectorAll('img').forEach(function (img) { img.addEventListener('load', update); });
     prev.addEventListener('click', function () { go(at() - 1); });
@@ -133,7 +142,8 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
       // R2에 아직 없는 사진은 "Photo coming soon"으로 보여요
       img.addEventListener('error', function () { img.parentNode.classList.add('missing'); });
       img.addEventListener('load', function () { img.parentNode.classList.add('loaded'); });
-      if (!img.getAttribute('src')) img.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
+      // 주소만 적어 두고, 실제로 받는 건 갤러리가 지금 보이는 사진 근처부터 해요
+      img.dataset.src = window.gateURL('photos/' + img.getAttribute('data-photo'), s);
     });
     photos.hidden = false;
     document.querySelectorAll('.gallery').forEach(function (g) { if (g.update) g.update(); });
