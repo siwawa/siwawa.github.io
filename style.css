@@ -159,6 +159,8 @@ p, li { text-wrap: pretty; }
 .gal-count { margin: 0.235rem 0 0; font-size: 0.824rem; color: var(--muted); text-align: right; }
 
 .photos[hidden] { display: none; }
+/* 사진 다음 맨 끝 메일 안내 한 줄 */
+.photos + .closing { margin-top: 2.824rem; }
 
 /* 연구 질문 토글: 누르면 펼쳐져요 */
 /* 연구 주제 제목: 위로 넉넉히 띄우고, 왼쪽 오른쪽을 번갈아 놓아 너무 반듯하지 않게 해요 */
