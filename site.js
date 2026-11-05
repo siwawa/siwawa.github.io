@@ -123,7 +123,8 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     a.addEventListener('click', function (e) {
       e.preventDefault();
       var s = window.gatePass();
-      if (s) { if (!window.open(window.gateURL('content/cv.pdf', s), '_blank', 'noopener')) location.href = window.gateURL('content/cv.pdf', s); return; }
+      // noopener를 옵션으로 주면 창이 열려도 null이 돌아와서, 열린 창의 opener만 끊어요
+      if (s) { var w = window.open(window.gateURL('content/cv.pdf', s), '_blank'); if (w) w.opener = null; else location.href = window.gateURL('content/cv.pdf', s); return; }
       window.gateSession(document.getElementById('gate') || undefined).then(function (s2) {
         location.href = window.gateURL('content/cv.pdf', s2);
       }).catch(function () {
