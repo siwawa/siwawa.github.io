@@ -58,7 +58,7 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
   };
   // 확인은 페이지가 열리자마자 미리 시작해 둬요. 내용은 여전히 사람이 처음 움직여야 나오지만,
   // 그때는 확인이 이미 끝나 있어서 바로 불러와요. 미리 하다 실패하면 움직일 때 다시 시도해요
-  if (document.querySelector('#photo, .photos, #research-body, .mail')) {
+  if (document.querySelector('#photo, .photos, #research-body, .mail, [data-mail]')) {
     window.gateSession(document.getElementById('gate') || undefined).catch(function () {});
   }
 })();
@@ -135,10 +135,10 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
 })();
 
 // 메일 주소: 사진처럼 R2(content/mail.txt)에 두고, 사람이 처음 움직이면 확인을 거쳐 받아 와요
-// 받아 오면 맨 아래에 누르면 메일 앱이 열리는 링크로 넣고, 실패하면 풀어 쓴 주소를 보여 줘요
+// 받아 오면 맨 아래와 About me의 Contact([data-mail])에 누르면 메일 앱이 열리는 링크로 넣고, 실패하면 풀어 쓴 주소를 보여 줘요
 (function () {
-  var box = document.querySelector('.mail');
-  if (!box) return;
+  var boxes = document.querySelectorAll('.mail, [data-mail]');
+  if (!boxes.length) return;
   var events = ['pointermove', 'touchstart', 'scroll', 'keydown'];
   function show() {
     events.forEach(function (e) { window.removeEventListener(e, show); });
@@ -146,13 +146,16 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
       return fetch(window.gateURL('content/mail.txt', s)).then(function (r) { if (!r.ok) throw new Error('load'); return r.text(); });
     }).then(function (addr) {
       addr = addr.trim();
-      var a = document.createElement('a');
-      a.href = 'mailto:' + addr;
-      a.textContent = addr;
-      box.appendChild(a);
+      boxes.forEach(function (box) {
+        var a = document.createElement('a');
+        a.href = 'mailto:' + addr;
+        a.textContent = addr;
+        box.textContent = '';
+        box.appendChild(a);
+      });
     }).catch(function () {
-      box.textContent = 'siwawa [at] snu [dot] ac [dot] kr';
-    }).then(function () { box.hidden = false; });
+      boxes.forEach(function (box) { box.textContent = 'siwawa [at] snu [dot] ac [dot] kr'; });
+    }).then(function () { boxes.forEach(function (box) { box.hidden = false; }); });
   }
   events.forEach(function (e) { window.addEventListener(e, show, { passive: true }); });
 })();
