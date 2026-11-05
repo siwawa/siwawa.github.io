@@ -182,7 +182,7 @@ p, li { text-wrap: pretty; }
 /* 영어 글 속 한글 단어는 줄 끝에서 글자 단위로 쪼개지지 않게 해요 */
 [lang="ko"] { white-space: nowrap; }
 /* 사진 다음 맨 끝 메일 안내 한 줄 */
-.photos + .closing { margin-top: 2.824rem; }
+.photos + .closing, .photos + h2 { margin-top: 2.824rem; }
 
 /* 연구 질문 토글: 누르면 펼쳐져요 */
 /* 연구 주제 제목: 위로 넉넉히 띄우고, 왼쪽 오른쪽을 번갈아 놓아 너무 반듯하지 않게 해요 */
