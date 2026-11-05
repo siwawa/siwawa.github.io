@@ -51,6 +51,11 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     return pending;
   };
   window.gateURL = function (path, s) { return GATE.worker + '/file/' + path + '?s=' + encodeURIComponent(s); };
+  // 이미 받아 둔 통행증이 있으면 바로 돌려줘요 (없으면 null). 새 창은 누른 순간에만 열 수 있어서 CV 링크가 써요
+  window.gatePass = function () {
+    try { var c = JSON.parse(localStorage.getItem('gate') || 'null'); if (c && c.exp > Date.now() + 60000) return c.session; } catch (e) {}
+    return null;
+  };
   // 확인은 페이지가 열리자마자 미리 시작해 둬요. 내용은 여전히 사람이 처음 움직여야 나오지만,
   // 그때는 확인이 이미 끝나 있어서 바로 불러와요. 미리 하다 실패하면 움직일 때 다시 시도해요
   if (document.querySelector('#photo, .photos, #research-body, .mail')) {
@@ -108,6 +113,23 @@ var GATE = { worker: 'https://hayoung-gate.siwawa6734.workers.dev', sitekey: '0x
     window.addEventListener('resize', update);
     g.update = update;
     update();
+  });
+})();
+
+// CV: 공개 저장소가 아니라 R2(content/cv.pdf)에 있어요. 메뉴의 CV를 누르면 확인을 거쳐 새 탭에서 열려요
+// 통행증이 이미 있으면 바로 새 탭으로, 없으면 확인을 마친 뒤 이 탭에서 열어요(나중에 여는 새 창은 브라우저가 막아요)
+(function () {
+  document.querySelectorAll('a[data-cv]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var s = window.gatePass();
+      if (s) { if (!window.open(window.gateURL('content/cv.pdf', s), '_blank', 'noopener')) location.href = window.gateURL('content/cv.pdf', s); return; }
+      window.gateSession(document.getElementById('gate') || undefined).then(function (s2) {
+        location.href = window.gateURL('content/cv.pdf', s2);
+      }).catch(function () {
+        alert('Sorry, my CV couldn’t load. Please refresh the page and try again, or email me at siwawa [at] snu [dot] ac [dot] kr.');
+      });
+    });
   });
 })();
 
